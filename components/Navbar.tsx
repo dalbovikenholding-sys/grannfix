@@ -8,20 +8,20 @@ export default function Navbar() {
           Grannfix
         </Link>
         <div className="hidden md:flex items-center gap-8 text-sm text-gray-600">
-          <Link href="/uppdrag" className="hover:text-[#1a6b3c] transition-colors">
+          <Link href="/uppdrag" className="hover:text-[#1a6b3c] active:opacity-60 transition-colors duration-[120ms]">
             Hitta uppdrag
           </Link>
-          <Link href="/bli-granne" className="hover:text-[#1a6b3c] transition-colors">
+          <Link href="/bli-granne" className="hover:text-[#1a6b3c] active:opacity-60 transition-colors duration-[120ms]">
             Bli granne
           </Link>
-          <Link href="/#priser" className="hover:text-[#1a6b3c] transition-colors">
+          <Link href="/#priser" className="hover:text-[#1a6b3c] active:opacity-60 transition-colors duration-[120ms]">
             Priser
           </Link>
         </div>
         <div className="flex items-center gap-3">
           <Link
             href="/login"
-            className="text-sm text-gray-600 hover:text-[#1a6b3c] transition-colors font-medium"
+            className="text-sm text-gray-600 hover:text-[#1a6b3c] active:opacity-60 transition-colors duration-[120ms] font-medium"
           >
             Logga in
           </Link>

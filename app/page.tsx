@@ -14,10 +14,10 @@ export default function Home() {
               Grannfix kopplar ihop dig med pålitliga grannar i Luleå och Norrbotten. Flytt, städ, trädgård, tunga lyft eller småfix: du sätter priset, grannen hjälper till.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="#kom-igang" className="btn-primary bg-[#1a6b3c] text-white px-8 py-4 rounded-full font-semibold text-lg">
+              <a href="#kom-igang" className="btn-primary bg-[#1a6b3c] hover:bg-[#145530] text-white px-8 py-4 rounded-full font-semibold text-lg">
                 Lägg ut ett uppdrag
               </a>
-              <a href="#hur-det-fungerar" className="btn-secondary border-2 border-[#1a6b3c] text-[#1a6b3c] px-8 py-4 rounded-full font-semibold text-lg">
+              <a href="#hur-det-fungerar" className="btn-secondary border-2 border-[#1a6b3c] text-[#1a6b3c] hover:bg-[#1a6b3c]/8 px-8 py-4 rounded-full font-semibold text-lg">
                 Så fungerar det
               </a>
             </div>
@@ -41,7 +41,7 @@ export default function Home() {
               { icon: "🔒", title: "Säker betalning", text: "Pengarna betalas ut till grannen först när du är nöjd." },
               { icon: "📍", title: "Lokalt i Norrbotten", text: "Grannar i Luleå, Boden, Piteå och hela länet." },
             ].map(f => (
-              <div key={f.title} className="text-center p-6">
+              <div key={f.title} className="stagger-item text-center p-6">
                 <div className="text-4xl mb-4">{f.icon}</div>
                 <h3 className="font-semibold text-gray-900 mb-2">{f.title}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">{f.text}</p>
@@ -64,7 +64,7 @@ export default function Home() {
               { step: "2", icon: "👋", title: "Välj din granne", text: "Se profiler och betyg på grannar i närheten. Välj den som passar dig bäst." },
               { step: "3", icon: "✅", title: "Betala säkert", text: "Grannen utför jobbet. Du godkänner och betalningen sker direkt i appen." },
             ].map(s => (
-              <div key={s.step} className="bg-white rounded-2xl p-8 shadow-sm">
+              <div key={s.step} className="stagger-item bg-white rounded-2xl p-8 shadow-sm">
                 <div className="w-8 h-8 bg-[#1a6b3c] text-white rounded-full flex items-center justify-center text-sm font-bold mb-6">
                   {s.step}
                 </div>
@@ -93,7 +93,7 @@ export default function Home() {
               { icon: "🔧", title: "Småfix & montering", text: "IKEA-montering, målning, enklare reparationer." },
               { icon: "🎁", title: "Bortskänkes & second hand", text: "Ge bort saker gratis eller hitta någon som hämtar." },
             ].map(s => (
-              <div key={s.title} className="service-card border border-gray-100 rounded-2xl p-6 cursor-default">
+              <div key={s.title} className="stagger-item service-card border border-gray-100 rounded-2xl p-6 cursor-default">
                 <div className="text-3xl mb-4">{s.icon}</div>
                 <h3 className="font-semibold text-gray-900 mb-2">{s.title}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">{s.text}</p>
