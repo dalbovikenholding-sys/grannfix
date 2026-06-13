@@ -16,7 +16,7 @@ Plattformen tar 15 procent i serviceavgift av ordervärdet, dock lägst 25 krono
 
 Marknaden saknar idag en lokal aktör. Tiptapp är storstadsfokuserat, Blocket och Facebook Marketplace löser annonsering men inte betalning eller trygghet. Grannfix äger den norrbottniska kombinationen av lokal förankring, säker betalning och enkelhet.
 
-Prognosen är 1 100 uppdrag och 550 000 kronor i förmedlat värde år 1 i Luleå, växande till 14 000 uppdrag och 7 000 000 kronor år 3 i hela regionen. Nettointäkten växer från cirka 66 000 kronor år 1 till cirka 840 000 kronor år 3. Break-even bedöms realistiskt år 3 till 4. Bolaget ägs av Dalboviken Holding AB, vilket möjliggör en skattefri exit via näringsbetingade andelar.
+Prognosen är 1 100 uppdrag och 550 000 kronor i förmedlat värde år 1 i Luleå, växande till 14 000 uppdrag och 7 000 000 kronor år 3 i hela regionen. Nettointäkten växer från cirka 66 000 kronor år 1 till cirka 840 000 kronor år 3. Break-even på löpande drift bedöms realistiskt år 2. Break-even på totalinvestering, inklusive startkapitalet på 225 000 kronor, bedöms år 3 till 4. Affärsplanen innehåller ett konservativt scenario som visar att bolaget överlever och når positivt resultat även vid hälften av prognostiserad volym. Bolaget ägs av Dalboviken Holding AB, vilket möjliggör en skattefri exit via näringsbetingade andelar.
 
 ---
 
@@ -91,6 +91,12 @@ Norrbotten har cirka 250 000 invånare. Luleå kommun har cirka 80 000 invånare
 **Facebook Marketplace och lokala Facebook-grupper:** Den verkliga nuvarande konkurrenten. Norrbottningar efterlyser redan hjälp i bygdegrupper. Svagheten är total avsaknad av betalningsskydd, betygsystem och ansvar. Grannfix erbjuder samma lokala känsla men med trygghet och struktur.
 
 **Informell grannhjälp och svartarbete:** Den största verkliga konkurrenten. Folk frågar redan grannen eller betalar svart. Grannfix måste göra det enklare och tryggare att gå via plattformen än att göra upp i handen, och måste hålla avgiften så låg att den känns rimlig.
+
+**RUT-avdraget och prisjämförelse:** En städfirma fakturerar typiskt 250 till 350 kronor per timme. Med RUT-avdrag (50 procent av arbetskostnaden) betalar kunden 125 till 175 kronor per timme. En granne via Grannfix tar kanske 180 kronor per timme plus 15 procent serviceavgift, vilket ger ett kundpris på cirka 207 kronor. Grannfix kostar alltså mer än en RUT-berättigad städfirma för just städtjänster.
+
+Konkurrenskraften ligger på andra parametrar: omedelbar tillgänglighet (Grannfix kan leverera samma dag, städfirmor har ofta 2 till 4 veckors väntetid under högsäsong), flexibelt pris (beställaren sätter priset, inget timtaxekrav), och tjänster som städfirmor inte gör (flytt, snöskottning, IKEA-montering, bortforsling). Snöskottning vid akut snöfall är ett tydligt exempel: ingen städfirma erbjuder det, men en granne kan rycka ut inom en timme.
+
+Prisgapet mot RUT-städ är reellt och ska inte underskattas. Grannfix adresserar det primärt genom att vara bättre på tillgänglighet och kategoribredd, inte genom att konkurrera på pris i städsegmentet.
 
 **Slutsats:** Det finns ingen direkt lokal konkurrent som kombinerar lokal förankring, säker betalning och enkelhet. Det är Grannfix position.
 
@@ -197,10 +203,12 @@ Startkapitalet tillförs av Dalboviken Holding AB som aktieägartillskott. Aktie
 | Bolagsbildning och registrering | 2 000 kr | Bolagsverket m.m. |
 | Marknadsföring vid lansering | 20 000 kr | Lokala annonser, Facebook, lokal press |
 | Försäkring, grundskydd | 5 000 kr | Ansvarsförsäkring för bolaget |
-| Övrigt och buffert | 13 000 kr | Oförutsett |
-| **Totalt startkapitalbehov** | **175 000 kr** | |
+| BankID-verifiering (500 användare à 8 kr) | 4 000 kr | Verifiering via Signicat eller Onfido |
+| Övrigt och oförutsett | 9 000 kr | Förseningar, extra juridiktid |
+| **Likviditetsreserv** | **50 000 kr** | Rörelsekapital år 1, täcker operativ förlust och oväntade händelser |
+| **Totalt startkapitalbehov** | **225 000 kr** | |
 
-Beloppet ryms väl inom det bedömda spannet 150 000 till 250 000 kronor. Teknisk utveckling är den enskilt största posten och kan variera beroende på om arbetet sker inom koncernen eller med extern part.
+Beloppet tillförs av Dalboviken Holding AB som aktieägartillskott. Likviditetsreserven på 50 000 kronor är avsiktligt stor: den säkerställer att bolaget överlever ett scenario där Stripe Connect-onboarding drar ut på tiden, snöskottningssäsongen 2026/2027 är mild eller att volymuppbyggnaden tar ett kvartal längre än prognostiserat. Teknisk utveckling är den enskilt osäkraste posten och kan variera beroende på om arbetet sker inom koncernen eller med extern part.
 
 ---
 
@@ -323,6 +331,28 @@ Eftersom Grannfix aldrig håller kundpengar, utan dessa hålls i escrow hos PSP 
 | 2027, år 2 | Utrullning till Boden, Piteå, Kalix och Älvsbyn. Trygghetsavgift och försäkring driftsatt. Mål 5 000 uppdrag. |
 | 2028, år 3 | Bred regional täckning i Norrbotten. Mål 14 000 uppdrag och 7 000 000 kronor i förmedlat värde. Närmar sig break-even. |
 | 2029, år 4 | Bevisad lönsam regional modell. Underlag för replikering till andra glesbygdslän eller exit via näringsbetingade andelar. |
+
+---
+
+---
+
+### Konservativt scenario: 50 procent av prognostiserad volym
+
+Tabellen nedan visar utfall om tillväxten tar längre tid än förväntat, exempelvis vid en mild snöskottningssäsong, svag kallstart eller att expansion till nya orter förskjuts ett halvår. Volymen halveras, kostnaderna antas oförändrade eftersom de är till stor del fasta.
+
+| Post | Plan år 1 | Konservativt år 1 | Plan år 2 | Konservativt år 2 | Plan år 3 | Konservativt år 3 |
+|---|---|---|---|---|---|---|
+| Antal uppdrag | 1 100 | 550 | 5 000 | 2 500 | 14 000 | 7 000 |
+| GMV | 550 000 kr | 275 000 kr | 2 500 000 kr | 1 250 000 kr | 7 000 000 kr | 3 500 000 kr |
+| Nettointäkt | 66 000 kr | 33 000 kr | 300 000 kr | 150 000 kr | 840 000 kr | 420 000 kr |
+| Fasta kostnader | -39 000 kr | -39 000 kr | -37 000 kr | -37 000 kr | -51 000 kr | -51 000 kr |
+| Rörliga kostnader (exkl. försäkring) | -10 000 kr | -5 000 kr | -46 000 kr | -23 000 kr | -127 000 kr | -64 000 kr |
+| Marknadsföring | -30 000 kr | -25 000 kr | -70 000 kr | -55 000 kr | -85 000 kr | -70 000 kr |
+| **Rörelseresultat** | **-13 000 kr** | **-36 000 kr** | **+147 000 kr** | **+35 000 kr** | **+577 000 kr** | **+235 000 kr** |
+
+Det konservativa scenariot visar att bolaget vid halverad volym fortfarande når positivt rörelseresultat år 2 (35 000 kronor) och klart positivt år 3 (235 000 kronor). År 1-förlusten i det konservativa scenariot på 36 000 kronor ryms inom likviditetsreserven på 50 000 kronor med 14 000 kronor i marginal. Break-even på totalinvestering, inklusive startkapital på 225 000 kronor, infaller i det konservativa scenariot år 4 i stället för år 3.
+
+Slutsats: affärsmodellen bär sig även vid hälften av prognostiserad tillväxt, förutsatt att startkapitalet är korrekt dimensionerat.
 
 ---
 
