@@ -8,7 +8,8 @@ import { Suspense } from 'react'
 function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const returnTo = searchParams.get('returnTo') || '/dashboard'
+  const raw = searchParams.get('returnTo') || '/dashboard'
+  const returnTo = raw.startsWith('/') && !raw.startsWith('//') && !raw.startsWith('/\\') ? raw : '/dashboard'
 
   const [epost, setEpost] = useState('')
   const [losenord, setLosenord] = useState('')
