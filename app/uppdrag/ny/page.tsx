@@ -175,7 +175,7 @@ export default function NyttUppdragPage() {
                   id="pris"
                   type="range"
                   min={50}
-                  max={3000}
+                  max={10000}
                   step={50}
                   value={form.pris}
                   onChange={e => setForm(f => ({ ...f, pris: Number(e.target.value) }))}
@@ -183,7 +183,7 @@ export default function NyttUppdragPage() {
                 />
                 <div className="flex justify-between text-xs text-gray-400 mt-1">
                   <span>50 kr</span>
-                  <span>3 000 kr</span>
+                  <span>10 000 kr</span>
                 </div>
               </div>
               <div>
@@ -240,7 +240,7 @@ export default function NyttUppdragPage() {
                 </div>
               </div>
               <p className="text-xs text-gray-400">
-                Grannfix tar en serviceavgift på 10% när uppdraget är avslutat. Du betalar ingenting nu.
+                Grannfix tar en serviceavgift på 15% när uppdraget är avslutat. Du betalar ingenting nu.
               </p>
               <div className="flex gap-3">
                 <button type="button" onClick={handleBack} className="btn-secondary flex-1 border-2 border-gray-200 text-gray-700 py-3.5 rounded-full font-semibold">

@@ -6,7 +6,7 @@ import { useState } from 'react'
 export default function BliGrannePage() {
   const [timmarPerVecka, setTimmarPerVecka] = useState(5)
   const TIMERSATS = 120
-  const manadsinkomst = Math.round(timmarPerVecka * TIMERSATS * 4 * 0.9)
+  const manadsinkomst = Math.round(timmarPerVecka * TIMERSATS * 4 * 0.85)
 
   return (
     <div className="min-h-[calc(100vh-128px)]">

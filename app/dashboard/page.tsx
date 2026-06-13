@@ -1,5 +1,12 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { mockUppdrag, KATEGORIER } from '@/lib/mockData'
+
+export const metadata: Metadata = {
+  title: 'Min sida',
+  description: 'Hantera dina uppdrag och din profil på Grannfix.',
+  robots: { index: false, follow: false },
+}
 
 const MOCK_NAMN = 'Anna K.'
 const MINA_UPPDRAG = mockUppdrag.slice(0, 2)
