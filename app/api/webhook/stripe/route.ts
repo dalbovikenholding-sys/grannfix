@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { stripe } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe'
 import { createServerClient } from '@supabase/ssr'
 
 // Supabase service-role klient för webhook (kringgår RLS)
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 
   let event
   try {
-    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
+    event = getStripe().webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
   } catch {
     return NextResponse.json({ error: 'Ogiltig webhook-signatur.' }, { status: 400 })
   }
