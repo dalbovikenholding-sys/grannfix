@@ -38,7 +38,8 @@ export async function loggaIn(formData: FormData) {
     return { error: 'Fel e-postadress eller lösenord.' }
   }
 
-  const returnTo = (formData.get('returnTo') as string) || '/dashboard'
+  const raw = (formData.get('returnTo') as string) || '/dashboard'
+  const returnTo = raw.startsWith('/') && !raw.startsWith('//') && !raw.startsWith('/\\') ? raw : '/dashboard'
   redirect(returnTo)
 }
 

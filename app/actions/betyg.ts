@@ -14,6 +14,22 @@ export async function lämnaBetyg(
   if (!user) return { error: 'Inte inloggad.' }
   if (stjärnor < 1 || stjärnor > 5) return { error: 'Ogiltigt betyg.' }
 
+  // Verifiera att uppdraget är slutfört och att tillId är rätt motpart
+  const { data: uppdrag } = await (supabase as any)
+    .from('uppdrag')
+    .select('beställare_id, utförare_id, status')
+    .eq('id', uppdragId)
+    .single()
+
+  if (!uppdrag || uppdrag.status !== 'slutfört') return { error: 'Otillåtet.' }
+
+  const förväntadTill =
+    user.id === uppdrag.beställare_id ? uppdrag.utförare_id :
+    user.id === uppdrag.utförare_id ? uppdrag.beställare_id :
+    null
+
+  if (!förväntadTill || förväntadTill !== tillId) return { error: 'Otillåtet.' }
+
   const { error } = await (supabase as any)
     .from('betyg')
     .insert({

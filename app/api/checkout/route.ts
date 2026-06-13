@@ -52,14 +52,11 @@ export async function POST(request: NextRequest) {
     metadata: { uppdragId },
   })
 
-  // Spara payment intent id på uppdraget
+  // Spara payment intent id – status sätts till 'pågående' av webhookens payment_intent.succeeded
   if (session.payment_intent) {
     await (supabase as any)
       .from('uppdrag')
-      .update({
-        stripe_payment_intent_id: session.payment_intent as string,
-        status: 'pågående',
-      })
+      .update({ stripe_payment_intent_id: session.payment_intent as string })
       .eq('id', uppdragId)
   }
 
