@@ -1,16 +1,11 @@
 import Link from 'next/link'
-import type { Uppdrag } from '@/lib/mockData'
-import { KATEGORIER } from '@/lib/mockData'
+import { KATEGORIER } from '@/lib/konstanter'
+import type { Uppdrag } from '@/lib/supabase/types'
 
-interface TaskCardProps {
-  uppdrag: Uppdrag
-}
-
-export default function TaskCard({ uppdrag }: TaskCardProps) {
+export default function TaskCard({ uppdrag }: { uppdrag: Uppdrag }) {
   const kat = KATEGORIER[uppdrag.kategori]
   const datumVisat = new Date(uppdrag.datum).toLocaleDateString('sv-SE', {
-    day: 'numeric',
-    month: 'short',
+    day: 'numeric', month: 'short',
   })
 
   return (
@@ -29,12 +24,6 @@ export default function TaskCard({ uppdrag }: TaskCardProps) {
         <span>{uppdrag.stad}</span>
         <span>·</span>
         <span>{datumVisat}</span>
-        {uppdrag.intresserade > 0 && (
-          <>
-            <span>·</span>
-            <span>{uppdrag.intresserade} intresserade</span>
-          </>
-        )}
       </div>
       <div className="flex items-center justify-between pt-1 border-t border-gray-50">
         <span className="font-bold text-[#1a6b3c] text-lg">{uppdrag.pris} kr</span>

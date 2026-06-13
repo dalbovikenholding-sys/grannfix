@@ -1,34 +1,67 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-
-/**
- * Betalningsflöde via Stripe Connect (att implementera före lansering)
- *
- * Installations- och konfigurationssteg:
- * 1. npm install stripe
- * 2. Lägg till i .env.local:
- *    STRIPE_SECRET_KEY=sk_live_...
- *    STRIPE_WEBHOOK_SECRET=whsec_...
- *    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
- * 3. Skapa Stripe Connect-konto för varje ny utförare vid registrering
- *    (POST /api/connect/onboard)
- * 4. Skapa Payment Intent med transfer_data när beställaren bekräftar uppdrag
- * 5. Frigör beloppet till utföraren via Transfer när beställaren godkänt
- *
- * Escrow-flöde:
- *   Beställare betalar → funds spärrade → uppdrag utfört →
- *   Beställare godkänner → Stripe Transfer till utförare
- *   (minus 15 % serviceavgift + Stripes transaktionskostnad)
- *
- * Referens: https://stripe.com/docs/connect/collect-then-transfer-guide
- */
+import { createClient } from '@/lib/supabase/server'
+import { stripe, beräknaAvgift } from '@/lib/stripe'
 
 export async function POST(request: NextRequest) {
-  return NextResponse.json(
-    {
-      error: 'Betaltjänst är inte konfigurerad ännu.',
-      info: 'Grannfix integrerar Stripe Connect vid lansering hösten 2026.',
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) {
+    return NextResponse.json({ error: 'Inte inloggad.' }, { status: 401 })
+  }
+
+  const { uppdragId } = await request.json()
+
+  const { data: uppdrag, error } = await (supabase as any)
+    .from('uppdrag')
+    .select('*')
+    .eq('id', uppdragId)
+    .eq('beställare_id', user.id)
+    .eq('status', 'accepterad')
+    .single()
+
+  if (error || !uppdrag) {
+    return NextResponse.json({ error: 'Uppdraget hittades inte.' }, { status: 404 })
+  }
+
+  const { brutto, avgift } = beräknaAvgift(uppdrag.pris)
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://grannfix.se'
+
+  const session = await stripe.checkout.sessions.create({
+    mode: 'payment',
+    line_items: [
+      {
+        price_data: {
+          currency: 'sek',
+          unit_amount: brutto * 100,
+          product_data: {
+            name: uppdrag.titel,
+            description: `Grannfix-uppdrag i ${uppdrag.stad}`,
+          },
+        },
+        quantity: 1,
+      },
+    ],
+    payment_intent_data: {
+      application_fee_amount: avgift * 100,
+      metadata: { uppdragId, beställareId: user.id },
     },
-    { status: 503 }
-  )
+    success_url: `${appUrl}/uppdrag/${uppdragId}?betalt=1`,
+    cancel_url: `${appUrl}/uppdrag/${uppdragId}`,
+    metadata: { uppdragId },
+  })
+
+  // Spara payment intent id på uppdraget
+  if (session.payment_intent) {
+    await (supabase as any)
+      .from('uppdrag')
+      .update({
+        stripe_payment_intent_id: session.payment_intent as string,
+        status: 'pågående',
+      })
+      .eq('id', uppdragId)
+  }
+
+  return NextResponse.json({ url: session.url })
 }
