@@ -8,10 +8,10 @@ export default function Home() {
           <div>
             <p className="text-[#1a6b3c] font-medium text-sm uppercase tracking-wider mb-4">Norrbottens grannhjälp</p>
             <h1 className="text-5xl font-bold text-gray-900 leading-tight mb-6">
-              Hjälp av grannen — när du behöver det
+              Hjälp av grannen, när du behöver det
             </h1>
             <p className="text-xl text-gray-500 mb-10 leading-relaxed">
-              Grannfix kopplar ihop dig med pålitliga grannar i Luleå och Norrbotten. Flytt, städ, trädgård, tunga lyft eller småfix — du sätter priset, grannen hjälper till.
+              Grannfix kopplar ihop dig med pålitliga grannar i Luleå och Norrbotten. Flytt, städ, trädgård, tunga lyft eller småfix: du sätter priset, grannen hjälper till.
             </p>
             <div className="flex flex-wrap gap-4">
               <a href="#kom-igang" className="btn-primary bg-[#1a6b3c] text-white px-8 py-4 rounded-full font-semibold text-lg">
@@ -37,7 +37,7 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { icon: "⚡", title: "Snabb hjälp", text: "Hitta en granne samma dag, ofta inom några timmar." },
-              { icon: "💸", title: "Du sätter priset", text: "Ange vad du är villig att betala — ingen dold prislista." },
+              { icon: "💸", title: "Du sätter priset", text: "Ange vad du är villig att betala. Ingen dold prislista." },
               { icon: "🔒", title: "Säker betalning", text: "Pengarna betalas ut till grannen först när du är nöjd." },
               { icon: "📍", title: "Lokalt i Norrbotten", text: "Grannar i Luleå, Boden, Piteå och hela länet." },
             ].map(f => (

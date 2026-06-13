@@ -32,7 +32,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="max-w-6xl mx-auto border-t border-gray-800 mt-10 pt-8 text-center text-sm">
-        <p>© 2026 Grannfix — ett Dalboviken-projekt</p>
+        <p>© 2026 Grannfix, ett Dalboviken-projekt</p>
       </div>
     </footer>
   )
