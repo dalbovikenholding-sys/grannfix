@@ -1,39 +1,111 @@
 import { Reveal } from '@/components/ScrollReveal'
+import FAQ from '@/components/FAQ'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Grannfix | Grannhjälp i Norrbotten',
+  title: 'Grannfix | Grannhjälp i Norrbotten – Flytt, Städ, Trädgård & Småfix',
   description: 'Anlita grannen för flytt, städ, trädgård och småfix i Norrbotten. Du sätter priset, grannen hjälper till samma dag. Snabbt, prisvärt och lokalt i Luleå, Boden och Piteå.',
   alternates: { canonical: 'https://grannfix.se' },
 }
 
+const faqItems = [
+  { q: 'Vad är Grannfix?', a: 'Grannfix är en lokal digital marknadsplats som kopplar ihop privatpersoner i Norrbotten för vardagsuppgifter som flytt, städ, trädgård och småfix. Du lägger ut ett uppdrag med ditt pris, en granne i närheten accepterar och utför jobbet.' },
+  { q: 'Hur mycket kostar det att anlita en granne via Grannfix?', a: 'Du sätter priset själv. Vanliga priser: enkel flytt 400–800 kr, storstäd av lägenhet 600–1 200 kr, snöskottning 150–400 kr, trädgårdsarbete 300–600 kr för 2 timmar, IKEA-montering 200–500 kr. Grannfix tar en serviceavgift på 15 procent av ordervärdet.' },
+  { q: 'Är betalningen säker på Grannfix?', a: 'Ja. Beloppet spärras hos betaltjänsten när du bokar och betalas ut till grannen först när du godkänner att jobbet är klart. Pengarna går aldrig till grannen förrän du är nöjd med resultatet.' },
+  { q: 'Hur snabbt kan jag få hjälp?', a: 'Ofta samma dag. Grannfix riktar sig mot uppdrag som behöver utföras snabbt och grannar i Luleå och Norrbotten kan ofta ställa upp med kort varsel.' },
+  { q: 'Vilka uppdrag kan jag lägga ut på Grannfix?', a: 'Flytt och bärhjälp, städhjälp, trädgårdsarbete, snöskottning, möbelmontering, småfix och reparationer, samt hämtning och lämning av saker till återvinning eller butik.' },
+  { q: 'Var är Grannfix tillgängligt?', a: 'Grannfix lanserar i Luleå hösten 2026. Utbyggnad planeras till Boden, Piteå, Kalix och resten av Norrbotten under 2027.' },
+  { q: 'Kan jag tjäna pengar som granne på Grannfix?', a: 'Ja. Du registrerar dig som utförare, väljer uppdrag i närheten, utför jobbet och får betalt direkt via appen när uppdragsgivaren godkänt.' },
+  { q: 'Behöver jag F-skatt för att ta uppdrag?', a: 'Nej, du behöver inte F-skatt för enstaka uppdrag som privatperson. Inkomsten är dock skattepliktig och ska deklareras. Grannfix rapporterar utförarens inkomst till Skatteverket varje år.' },
+]
+
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Service',
-  name: 'Grannfix',
-  description: 'Lokal marknadsplats för grannhjälp i Norrbotten. Flytt, städ, trädgård, snöskottning och småfix.',
-  url: 'https://grannfix.se',
-  provider: {
-    '@type': 'Organization',
-    name: 'Grannfix',
-    url: 'https://grannfix.se',
-    email: 'hej@grannfix.se',
-    areaServed: [
-      { '@type': 'City', name: 'Luleå' },
-      { '@type': 'City', name: 'Boden' },
-      { '@type': 'City', name: 'Piteå' },
-      { '@type': 'AdministrativeArea', name: 'Norrbotten' },
-    ],
-    foundingLocation: { '@type': 'City', name: 'Luleå' },
-  },
-  serviceType: ['Flytthjälp', 'Städhjälp', 'Trädgårdshjälp', 'Snöskottning', 'Möbelmontering', 'Småfix'],
-  offers: {
-    '@type': 'AggregateOffer',
-    priceCurrency: 'SEK',
-    lowPrice: '150',
-    highPrice: '1600',
-    description: 'Du sätter priset. Grannen hjälper till.',
-  },
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://grannfix.se/#organization',
+      name: 'Grannfix',
+      url: 'https://grannfix.se',
+      email: 'hej@grannfix.se',
+      description: 'Lokal marknadsplats för grannhjälp i Norrbotten.',
+      foundingDate: '2026',
+      foundingLocation: { '@type': 'City', name: 'Luleå', containedInPlace: { '@type': 'State', name: 'Norrbotten' } },
+      areaServed: [
+        { '@type': 'City', name: 'Luleå' },
+        { '@type': 'City', name: 'Boden' },
+        { '@type': 'City', name: 'Piteå' },
+        { '@type': 'City', name: 'Kalix' },
+        { '@type': 'AdministrativeArea', name: 'Norrbotten' },
+      ],
+      contactPoint: { '@type': 'ContactPoint', email: 'hej@grannfix.se', contactType: 'customer support', availableLanguage: 'Swedish' },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://grannfix.se/#website',
+      url: 'https://grannfix.se',
+      name: 'Grannfix',
+      publisher: { '@id': 'https://grannfix.se/#organization' },
+      inLanguage: 'sv-SE',
+    },
+    {
+      '@type': 'Service',
+      '@id': 'https://grannfix.se/#service',
+      name: 'Grannfix grannhjälp',
+      description: 'Lokal marknadsplats där du anlitar pålitliga grannar för flytt, städ, trädgård, snöskottning och småfix i Norrbotten. Du sätter priset, grannen hjälper till.',
+      url: 'https://grannfix.se',
+      provider: { '@id': 'https://grannfix.se/#organization' },
+      serviceType: ['Flytthjälp', 'Städhjälp', 'Trädgårdshjälp', 'Snöskottning', 'Möbelmontering', 'Bärhjälp', 'Småfix', 'Transport'],
+      areaServed: [
+        { '@type': 'City', name: 'Luleå' },
+        { '@type': 'City', name: 'Boden' },
+        { '@type': 'City', name: 'Piteå' },
+        { '@type': 'AdministrativeArea', name: 'Norrbotten' },
+      ],
+      offers: {
+        '@type': 'AggregateOffer',
+        priceCurrency: 'SEK',
+        lowPrice: '150',
+        highPrice: '1600',
+        offerCount: '6',
+        description: 'Du sätter priset. Grannfix tar 15% serviceavgift på genomförda uppdrag.',
+      },
+    },
+    {
+      '@type': 'HowTo',
+      name: 'Hur anlitar du en granne via Grannfix',
+      description: 'Tre steg från att lägga ut ett uppdrag till att få hjälp av en granne i Norrbotten.',
+      totalTime: 'PT1M',
+      step: [
+        {
+          '@type': 'HowToStep',
+          position: 1,
+          name: 'Lägg ut uppdraget',
+          text: 'Beskriv vad du behöver hjälp med, ange tid och sätt ditt pris. Det tar under en minut.',
+        },
+        {
+          '@type': 'HowToStep',
+          position: 2,
+          name: 'Välj din granne',
+          text: 'Se profiler och betyg på grannar i närheten. Välj den som passar dig bäst.',
+        },
+        {
+          '@type': 'HowToStep',
+          position: 3,
+          name: 'Betala säkert',
+          text: 'Grannen utför jobbet. Du godkänner och betalningen sker direkt i appen.',
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqItems.map(({ q, a }) => ({
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a },
+      })),
+    },
+  ],
 }
 
 export default function Home() {
@@ -302,6 +374,25 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ─── FAQ ─── */}
+      <section className="py-28 px-6 bg-white" aria-label="Vanliga frågor">
+        <div className="max-w-3xl mx-auto">
+          <Reveal>
+            <div className="mb-12">
+              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+                Vanliga frågor
+              </h2>
+              <p className="text-gray-500 text-lg">
+                Allt du behöver veta om grannhjälp via Grannfix.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={80}>
+            <FAQ />
+          </Reveal>
         </div>
       </section>
 
