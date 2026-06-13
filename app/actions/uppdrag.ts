@@ -76,11 +76,21 @@ export async function markeraSlutfört(uppdragId: string) {
 
   if (!user) return { error: 'Inte inloggad.' }
 
+  // Kräver pågående status och att betalning bekräftats (payment intent satt av webhook)
+  const { data: uppdrag } = await (supabase as any)
+    .from('uppdrag')
+    .select('status, beställare_id, stripe_payment_intent_id')
+    .eq('id', uppdragId)
+    .single()
+
+  if (!uppdrag || uppdrag.beställare_id !== user.id) return { error: 'Otillåtet.' }
+  if (uppdrag.status !== 'pågående') return { error: 'Uppdraget kan inte avslutas i nuläget.' }
+  if (!uppdrag.stripe_payment_intent_id) return { error: 'Betalning saknas.' }
+
   const { error } = await (supabase as any)
     .from('uppdrag')
     .update({ status: 'slutfört' })
     .eq('id', uppdragId)
-    .eq('beställare_id', user.id)
 
   if (error) return { error: error.message }
 

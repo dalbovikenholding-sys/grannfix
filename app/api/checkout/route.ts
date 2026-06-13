@@ -44,8 +44,7 @@ export async function POST(request: NextRequest) {
       },
     ],
     payment_intent_data: {
-      application_fee_amount: avgift * 100,
-      metadata: { uppdragId, beställareId: user.id },
+      metadata: { uppdragId, beställareId: user.id, avgiftKr: String(avgift) },
     },
     success_url: `${appUrl}/uppdrag/${uppdragId}?betalt=1`,
     cancel_url: `${appUrl}/uppdrag/${uppdragId}`,

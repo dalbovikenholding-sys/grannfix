@@ -4,6 +4,8 @@ import { createClient } from '@/lib/supabase/server'
 import { KATEGORIER } from '@/lib/konstanter'
 import IntresseKnapp from '@/components/IntresseKnapp'
 import BetalKnapp from '@/components/BetalKnapp'
+import GodkännKnapp from '@/components/GodkännKnapp'
+import BetygFormulär from '@/components/BetygFormulär'
 import type { Uppdrag } from '@/lib/supabase/types'
 
 export default async function UppdragDetailPage({
@@ -83,6 +85,21 @@ export default async function UppdragDetailPage({
       .maybeSingle()
     harAnmältIntresse = !!data
   }
+
+  // Kolla om parten redan lämnat betyg
+  let harLämnatBetyg = false
+  if (user && uppdrag.status === 'slutfört' && (ärBeställare || ärUtförare)) {
+    const { data } = await (supabase as any)
+      .from('betyg')
+      .select('id')
+      .eq('uppdrag_id', id)
+      .eq('från_id', user.id)
+      .maybeSingle()
+    harLämnatBetyg = !!data
+  }
+
+  // Vem ska betygsättas av vem
+  const betygMotpartId = ärBeställare ? uppdrag.utförare_id : ärUtförare ? uppdrag.beställare_id : null
 
   return (
     <div className="min-h-[calc(100vh-128px)] bg-white">
@@ -198,6 +215,19 @@ export default async function UppdragDetailPage({
                   <div className="bg-[#f0faf4] rounded-xl p-4 text-sm text-[#1a6b3c]">
                     Uppdraget pågår. Betalning frigörs när beställaren godkänner.
                   </div>
+                )}
+
+                {/* Beställaren godkänner avslutat arbete */}
+                {ärBeställare && uppdrag.status === 'pågående' && (
+                  <GodkännKnapp uppdragId={id} />
+                )}
+
+                {/* Betygsformulär för båda parter efter slutfört */}
+                {uppdrag.status === 'slutfört' && (ärBeställare || ärUtförare) && betygMotpartId && !harLämnatBetyg && (
+                  <BetygFormulär uppdragId={id} tillId={betygMotpartId} />
+                )}
+                {uppdrag.status === 'slutfört' && (ärBeställare || ärUtförare) && harLämnatBetyg && (
+                  <p className="text-center text-sm text-gray-400">Du har lämnat betyg.</p>
                 )}
               </div>
 
