@@ -1,21 +1,6 @@
 export default function Home() {
   return (
-    <div className="font-[family-name:var(--font-geist-sans)]">
-
-      {/* NAV */}
-      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="text-xl font-semibold tracking-tight text-[#1a6b3c]">Grannfix</span>
-          <div className="hidden md:flex items-center gap-8 text-sm text-gray-600">
-            <a href="#hur-det-fungerar" className="hover:text-[#1a6b3c] transition-colors">Hur det fungerar</a>
-            <a href="#tjanster" className="hover:text-[#1a6b3c] transition-colors">Tjänster</a>
-            <a href="#priser" className="hover:text-[#1a6b3c] transition-colors">Priser</a>
-          </div>
-          <a href="#kom-igang" className="btn-primary bg-[#1a6b3c] text-white text-sm px-5 py-2 rounded-full font-medium">
-            Kom igång
-          </a>
-        </div>
-      </nav>
+    <div>
 
       {/* HERO */}
       <section className="bg-gradient-to-br from-[#f0faf4] to-white pt-20 pb-28 px-6">
@@ -191,37 +176,6 @@ export default function Home() {
           </form>
         </div>
       </section>
-
-      {/* FOOTER */}
-      <footer className="bg-gray-900 text-gray-400 py-12 px-6">
-        <div className="max-w-6xl mx-auto grid sm:grid-cols-3 gap-8">
-          <div>
-            <p className="text-white font-semibold text-lg mb-3">Grannfix</p>
-            <p className="text-sm leading-relaxed">Grannhjälp i Norrbotten. Snabbt, prisvärt och lokalt.</p>
-          </div>
-          <div>
-            <p className="text-white font-medium mb-3">Tjänster</p>
-            <ul className="space-y-2 text-sm">
-              <li>Flytta &amp; bära</li>
-              <li>Städhjälp</li>
-              <li>Trädgård &amp; snöskottning</li>
-              <li>Småfix &amp; montering</li>
-            </ul>
-          </div>
-          <div>
-            <p className="text-white font-medium mb-3">Kontakt</p>
-            <ul className="space-y-2 text-sm">
-              <li>hej@grannfix.se</li>
-              <li>Luleå, Norrbotten</li>
-              <li className="pt-2"><a href="#" className="hover:text-white transition-colors">Integritetspolicy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Användarvillkor</a></li>
-            </ul>
-          </div>
-        </div>
-        <div className="max-w-6xl mx-auto border-t border-gray-800 mt-10 pt-8 text-center text-sm">
-          <p>© 2026 Grannfix — ett Dalboviken-projekt</p>
-        </div>
-      </footer>
 
     </div>
   )
