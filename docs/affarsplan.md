@@ -185,27 +185,101 @@ Plattformen byggs mobilanpassad, tillgänglig enligt WCAG AA, med stöd för red
 
 ## 10. Finansiell plan
 
-**Startkapital:** Behovet är begränsat eftersom tekniken byggs på en kostnadseffektiv stack och betaltjänsten sköter den tunga betalningsinfrastrukturen. Initialt kapitalbehov bedöms till 150 000 till 250 000 kronor, främst för utveckling, bolagsbildning, försäkring, juridik kring villkor samt marknadsföring vid lansering. Kapitalet tillförs av Dalboviken Holding AB som aktieägartillskott eller koncernlån.
+### Startkapital och engångskostnader (före lansering)
 
-**Löpande kostnader, årligt:**
+Startkapitalet tillförs av Dalboviken Holding AB som aktieägartillskott. Aktiekapitalet i Grannfix AB är 25 000 kronor. Utöver det behövs rörelsekapital för engångskostnader före och vid lansering.
 
-- Hosting och drift, Vercel och kringtjänster: låg, skalbar med volym.
-- Betaltjänstens transaktionsavgifter: rörlig, dras från bruttoavgiften.
-- Plattformsansvarsförsäkring: finansieras av trygghetsavgiften.
-- Support, tvistehantering och löpande utveckling.
-- Marknadsföring, tyngst vid lansering och vid varje ny ort.
+| Post | Belopp | Kommentar |
+|---|---|---|
+| Aktiekapital | 25 000 kr | Minimikapital för AB |
+| Teknisk utveckling, MVP | 80 000 kr | Frontend, backend, betalintegration, DAC7-datamodell |
+| Juridik: villkor, PSD2-granskning, DAC7-rådgivning | 30 000 kr | Extern advokatgranskning, engångskostnad |
+| Bolagsbildning och registrering | 2 000 kr | Bolagsverket m.m. |
+| Marknadsföring vid lansering | 20 000 kr | Lokala annonser, Facebook, lokal press |
+| Försäkring, grundskydd | 5 000 kr | Ansvarsförsäkring för bolaget |
+| Övrigt och buffert | 13 000 kr | Oförutsett |
+| **Totalt startkapitalbehov** | **175 000 kr** | |
 
-**Resultatutveckling:**
+Beloppet ryms väl inom det bedömda spannet 150 000 till 250 000 kronor. Teknisk utveckling är den enskilt största posten och kan variera beroende på om arbetet sker inom koncernen eller med extern part.
 
-| Mått | År 1 | År 2 | År 3 |
+---
+
+### Löpande kostnader per år, rad för rad
+
+Kostnaderna är uppdelade i fasta kostnader, rörliga kostnader kopplade till volym, och marknadsinvesteringar.
+
+**Fasta kostnader (oberoende av antal uppdrag):**
+
+| Post | År 1 | År 2 | År 3 | Kommentar |
+|---|---|---|---|---|
+| Hosting, Vercel Pro | 6 000 kr | 6 000 kr | 12 000 kr | Skalbar, ökar vid hög trafik |
+| PSP-månadskostnad, Stripe/Mangopay | 0 kr | 0 kr | 0 kr | Rörlig per transaktion, ingen fast avgift |
+| Domän, e-post, verktyg | 3 000 kr | 3 000 kr | 3 000 kr | Standardkostnader |
+| Bokföring och redovisning | 15 000 kr | 15 000 kr | 20 000 kr | Extern redovisningsbyrå |
+| Försäkring, bolagsansvar | 5 000 kr | 5 000 kr | 8 000 kr | Stiger med omsättning |
+| Juridik och compliance, löpande | 10 000 kr | 8 000 kr | 8 000 kr | DAC7-rapport, villkorsuppdateringar |
+| **Summa fasta kostnader** | **39 000 kr** | **37 000 kr** | **51 000 kr** | |
+
+**Rörliga kostnader (kopplade till transaktionsvolym):**
+
+| Post | År 1 | År 2 | År 3 | Kommentar |
+|---|---|---|---|---|
+| PSP-transaktionsavgifter | 8 000 kr | 38 000 kr | 105 000 kr | Ca 1,5% + 1,80 kr/transaktion på GMV |
+| Plattformsansvarsförsäkring | 17 000 kr | 75 000 kr | 210 000 kr | Täcks av trygghetsavgiften (15–20 kr/uppdrag) |
+| Utbetalningskostnader, PSP | 2 000 kr | 8 000 kr | 22 000 kr | Fast kostnad per utbetalning till utförare |
+| **Summa rörliga kostnader** | **27 000 kr** | **121 000 kr** | **337 000 kr** | |
+
+*Not: Plattformsansvarsförsäkringen finansieras av trygghetsavgiften (15–20 kr per uppdrag × antal uppdrag). Vid 1 100 uppdrag år 1 ger det 16 500–22 000 kr, vilket täcker försäkringskostnaden med marginal. Trygghetsavgiften räknas som genomgångskostnad och påverkar inte rörelseresultatet.*
+
+**Marknadsinvesteringar:**
+
+| Post | År 1 | År 2 | År 3 | Kommentar |
+|---|---|---|---|---|
+| Digital marknadsföring, Facebook/Meta | 15 000 kr | 30 000 kr | 40 000 kr | Lokalt riktat, nya orter kräver ny budget |
+| Lokal PR och samarbeten | 5 000 kr | 10 000 kr | 15 000 kr | Lokal press, events, nätverk |
+| Utförarrekrytering per ny ort | 0 kr | 20 000 kr | 30 000 kr | Aktiv rekrytering av utförarsida |
+| Introduktionserbjudanden och subvention | 10 000 kr | 10 000 kr | 0 kr | Sänkt avgift vid kallstart |
+| **Summa marknadsföring** | **30 000 kr** | **70 000 kr** | **85 000 kr** | |
+
+---
+
+### Resultaträkning, sammanfattning
+
+| Post | År 1 | År 2 | År 3 |
 |---|---|---|---|
-| Nettointäkt | 66 000 kr | 300 000 kr | 840 000 kr |
-| Förmedlat värde, GMV | 550 000 kr | 2 500 000 kr | 7 000 000 kr |
-| Resultat | Negativt | Nära nollresultat | Mot break-even |
+| Intäkt (serviceavgift netto efter moms) | 66 000 kr | 300 000 kr | 840 000 kr |
+| Fasta kostnader | -39 000 kr | -37 000 kr | -51 000 kr |
+| Rörliga kostnader (exkl. försäkring) | -10 000 kr | -46 000 kr | -127 000 kr |
+| Marknadsföring | -30 000 kr | -70 000 kr | -85 000 kr |
+| **Rörelseresultat** | **-13 000 kr** | **+147 000 kr** | **+577 000 kr** |
 
-År 1 är en investeringsfas. Nettointäkten på cirka 66 000 kronor täcker inte uppbyggnadskostnaderna, vilket är väntat för en marknadsplats i kallstart. År 2 närmar sig verksamheten nollresultat. Break-even nås realistiskt år 3 till 4 när volymen bär de fasta kostnaderna. Modellen har låg rörlig kostnad per uppdrag, vilket gör att lönsamheten skalar snabbt över break-even.
+*Plattformsansvarsförsäkringen ingår inte i resultaträkningen eftersom den finansieras av en öronmärkt trygghetsavgift som hanteras som genomgångskostnad.*
 
-**Likviditet:** Eftersom Grannfix aldrig håller kundpengar, utan dessa hålls i escrow hos PSP, är likviditetsrisken i transaktionsflödet låg. Bolagets likviditetsbehov styrs av uppbyggnadskostnader, inte av kundpengar.
+År 1 ger ett litet negativt rörelseresultat på cirka 13 000 kronor, inte en stor förlust. Det beror på att teknisk utveckling och juridik belastar startkapitalet och räknas som engångsinvestering, inte som löpande kostnad år 1. År 2 vänds resultatet positivt tack vare volymskalning med låg kostnadsökning. År 3 är rörelseresultatet starkt positivt.
+
+Break-even på löpande drift uppnås alltså redan år 2 i detta scenario, förutsatt att tillväxten håller. Break-even på totalinvestering inklusive startkapital nås år 3 till 4.
+
+---
+
+### Kassaflöde, månadsvis år 1
+
+Lanseringen sker hösten 2026. Intäkterna byggs upp successivt under höst och vinter.
+
+| Kvartal | Uppdrag | Intäkt (netto) | Löpande kostnad | Netto |
+|---|---|---|---|---|
+| Kv 4 2026 (okt–dec) | 200 | 12 000 kr | 17 000 kr | -5 000 kr |
+| Kv 1 2027 (jan–mar) | 300 | 18 000 kr | 17 000 kr | +1 000 kr |
+| Kv 2 2027 (apr–jun) | 300 | 18 000 kr | 17 000 kr | +1 000 kr |
+| Kv 3 2027 (jul–sep) | 300 | 18 000 kr | 17 000 kr | +1 000 kr |
+| **Helår år 1** | **1 100** | **66 000 kr** | **69 000 kr** | **-3 000 kr** |
+
+*Snöskottningssäsongen (kv 1) och vår/sommar (kv 2–3) ger jämn volym. Marknadsföringskostnader är tyngre i kv 4 vid lansering och räknas separat i tabellen ovan.*
+
+---
+
+### Likviditet
+
+Eftersom Grannfix aldrig håller kundpengar, utan dessa hålls i escrow hos PSP och betalas ut direkt vid godkänt uppdrag, är likviditetsrisken i transaktionsflödet låg. Bolagets kassaflöde styrs av serviceavgiftsintäkter och löpande kostnader, inte av kundpengar. Det innebär att Grannfix inte behöver rörelsekapital för att finansiera betalningsflöden, enbart för sin egen verksamhet.
 
 ---
 
