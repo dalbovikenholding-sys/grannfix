@@ -3,9 +3,11 @@
 :root {
   --brand: #1a6b3c;
   --brand-light: #22a05a;
-  --brand-dark: #114a29;
+  --brand-dark: #0f3d21;
+  --brand-muted: #f0faf4;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 @theme inline {
@@ -17,66 +19,135 @@ body {
   color: #111827;
 }
 
+/* Hero typography */
+.hero-heading {
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+/* Scroll reveal - content visible by default (SSR safe) */
+.reveal-item {
+  /* no hiding by default */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-item {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 700ms var(--ease-out) var(--reveal-delay, 0ms),
+      transform 700ms var(--ease-out) var(--reveal-delay, 0ms);
+  }
+  .reveal-item[data-revealed='true'] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Buttons */
 .btn-primary {
-  transition: background-color 140ms var(--ease-out), transform 140ms var(--ease-out);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 160ms var(--ease-out),
+    transform 160ms var(--ease-out),
+    box-shadow 160ms var(--ease-out);
 }
 .btn-primary:active {
   transform: scale(0.97);
 }
 
 .btn-secondary {
-  transition: background-color 140ms var(--ease-out), border-color 140ms var(--ease-out), color 140ms var(--ease-out), transform 140ms var(--ease-out);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 160ms var(--ease-out),
+    border-color 160ms var(--ease-out),
+    color 160ms var(--ease-out),
+    transform 160ms var(--ease-out);
 }
 .btn-secondary:active {
   transform: scale(0.97);
 }
 
-/* Service / task cards */
+/* Task / service cards */
 .service-card {
-  transition: box-shadow 160ms var(--ease-out), transform 160ms var(--ease-out);
+  transition:
+    box-shadow 200ms var(--ease-out),
+    transform 200ms var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
   .service-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.09);
   }
 }
 .service-card:active {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
-/* Scroll-in stagger */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.stagger-item {
+/* Mobile menu overlay */
+.mobile-menu-overlay {
   opacity: 0;
-  animation: fadeUp 400ms var(--ease-out) forwards;
+  pointer-events: none;
+  transition: opacity 280ms var(--ease-out);
 }
-.stagger-item:nth-child(1) { animation-delay: 0ms; }
-.stagger-item:nth-child(2) { animation-delay: 60ms; }
-.stagger-item:nth-child(3) { animation-delay: 120ms; }
-.stagger-item:nth-child(4) { animation-delay: 180ms; }
-.stagger-item:nth-child(5) { animation-delay: 240ms; }
-.stagger-item:nth-child(6) { animation-delay: 300ms; }
+.mobile-menu-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
 
+.mobile-menu-link {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 400ms var(--ease-out),
+    transform 400ms var(--ease-out);
+}
+.mobile-menu-overlay.is-open .mobile-menu-link:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 80ms;
+}
+.mobile-menu-overlay.is-open .mobile-menu-link:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 140ms;
+}
+.mobile-menu-overlay.is-open .mobile-menu-link:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 200ms;
+}
+.mobile-menu-overlay.is-open .mobile-menu-link:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 260ms;
+}
+.mobile-menu-overlay.is-open .mobile-menu-link:nth-child(5) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 320ms;
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .stagger-item {
-    animation: none;
-    opacity: 1;
+  .reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
   .btn-primary:active,
   .btn-secondary:active,
   .service-card:active {
-    transform: none;
+    transform: none !important;
+  }
+  .mobile-menu-link {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
