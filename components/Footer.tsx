@@ -11,22 +11,26 @@ export default function Footer() {
         <div>
           <p className="text-white font-medium mb-3">Tjänster</p>
           <ul className="space-y-2 text-sm">
-            <li>Flytta &amp; bära</li>
-            <li>Städhjälp</li>
-            <li>Trädgård &amp; snöskottning</li>
-            <li>Småfix &amp; montering</li>
+            <li><Link href="/uppdrag?kategori=flytt" className="hover:text-white transition-colors">Flytta &amp; bära</Link></li>
+            <li><Link href="/uppdrag?kategori=stad" className="hover:text-white transition-colors">Städhjälp</Link></li>
+            <li><Link href="/uppdrag?kategori=tradgard" className="hover:text-white transition-colors">Trädgård &amp; snöskottning</Link></li>
+            <li><Link href="/uppdrag?kategori=smaffix" className="hover:text-white transition-colors">Småfix &amp; montering</Link></li>
           </ul>
         </div>
         <div>
           <p className="text-white font-medium mb-3">Kontakt</p>
           <ul className="space-y-2 text-sm">
-            <li>hej@grannfix.se</li>
+            <li>
+              <a href="mailto:hej@grannfix.se" className="hover:text-white transition-colors">
+                hej@grannfix.se
+              </a>
+            </li>
             <li>Luleå, Norrbotten</li>
             <li className="pt-2">
-              <Link href="#" className="hover:text-white transition-colors">Integritetspolicy</Link>
+              <Link href="/integritetspolicy" className="hover:text-white transition-colors">Integritetspolicy</Link>
             </li>
             <li>
-              <Link href="#" className="hover:text-white transition-colors">Användarvillkor</Link>
+              <Link href="/anvandarvillkor" className="hover:text-white transition-colors">Användarvillkor</Link>
             </li>
           </ul>
         </div>

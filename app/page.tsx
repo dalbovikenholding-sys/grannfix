@@ -1,7 +1,48 @@
 import { Reveal } from '@/components/ScrollReveal'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Grannfix | Grannhjälp i Norrbotten',
+  description: 'Anlita grannen för flytt, städ, trädgård och småfix i Norrbotten. Du sätter priset, grannen hjälper till samma dag. Snabbt, prisvärt och lokalt i Luleå, Boden och Piteå.',
+  alternates: { canonical: 'https://grannfix.se' },
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Grannfix',
+  description: 'Lokal marknadsplats för grannhjälp i Norrbotten. Flytt, städ, trädgård, snöskottning och småfix.',
+  url: 'https://grannfix.se',
+  provider: {
+    '@type': 'Organization',
+    name: 'Grannfix',
+    url: 'https://grannfix.se',
+    email: 'hej@grannfix.se',
+    areaServed: [
+      { '@type': 'City', name: 'Luleå' },
+      { '@type': 'City', name: 'Boden' },
+      { '@type': 'City', name: 'Piteå' },
+      { '@type': 'AdministrativeArea', name: 'Norrbotten' },
+    ],
+    foundingLocation: { '@type': 'City', name: 'Luleå' },
+  },
+  serviceType: ['Flytthjälp', 'Städhjälp', 'Trädgårdshjälp', 'Snöskottning', 'Möbelmontering', 'Småfix'],
+  offers: {
+    '@type': 'AggregateOffer',
+    priceCurrency: 'SEK',
+    lowPrice: '150',
+    highPrice: '1600',
+    description: 'Du sätter priset. Grannen hjälper till.',
+  },
+}
 
 export default function Home() {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <div>
 
       {/* ─── HERO ─── */}
@@ -296,5 +337,6 @@ export default function Home() {
       </section>
 
     </div>
+    </>
   )
 }
