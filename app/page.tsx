@@ -266,7 +266,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-4 animate-fade-rise-delay-2">
               <a
                 href="#kom-igang"
-                className="btn-primary bg-[#1a6b3c] hover:bg-[#145530] text-white px-8 py-4 rounded-full font-bold text-base inline-flex items-center gap-2"
+                className="btn-primary halo-once bg-[#1a6b3c] hover:bg-[#145530] text-white px-8 py-4 rounded-full font-bold text-base inline-flex items-center gap-2"
               >
                 Anmäl intresse
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -287,6 +287,7 @@ export default function Home() {
             >
               <span className="flex items-center gap-2">
                 <span
+                  className="drift"
                   style={{
                     display: 'inline-block',
                     width: '6px',

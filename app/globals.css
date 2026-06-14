@@ -31,19 +31,34 @@ body {
 .word-reveal {
   display: inline-block;
   vertical-align: baseline;
-  overflow: hidden;
 }
 .word-reveal > span {
   display: inline-block;
   transform: translateY(42%);
   opacity: 0;
-  animation: wordRise 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
-  will-change: transform, opacity;
+  animation: wordRise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  will-change: transform, opacity, filter;
 }
 @keyframes wordRise {
-  0%   { transform: translateY(42%); opacity: 0; }
-  100% { transform: translateY(0);   opacity: 1; }
+  0%   { transform: translateY(42%); opacity: 0; filter: blur(6px); }
+  60%  { filter: blur(0); }
+  100% { transform: translateY(0);   opacity: 1; filter: blur(0); }
 }
+
+/* ─── Drift (floating dot) ─── */
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%       { transform: translate3d(0, -8px, 0) scale(1.02); }
+}
+.drift { animation: drift 9s ease-in-out infinite; }
+
+/* ─── Halo pulse (CTA-knapp, en gång) ─── */
+@keyframes haloPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(26, 107, 60, 0.35); }
+  70%  { box-shadow: 0 0 0 18px rgba(26, 107, 60, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(26, 107, 60, 0); }
+}
+.halo-once { animation: haloPulse 1.6s ease-out 1.2s 1; }
 
 /* ─── Fade rise ─── */
 @keyframes fadeRise {
@@ -292,6 +307,8 @@ details.gf-faq[open] .faq-answer { max-height: 400px; }
   }
   .marquee-track { animation: none !important; }
   .cursor-glow { display: none !important; }
+  .drift { animation: none !important; }
+  .halo-once { animation: none !important; }
   .card-lift:hover,
   .card-lift:active,
   .service-card:hover,
