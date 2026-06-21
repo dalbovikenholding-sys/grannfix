@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+﻿import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { KATEGORIER } from '@/lib/konstanter'
@@ -6,7 +6,12 @@ import IntresseKnapp from '@/components/IntresseKnapp'
 import BetalKnapp from '@/components/BetalKnapp'
 import GodkännKnapp from '@/components/GodkännKnapp'
 import BetygFormulär from '@/components/BetygFormulär'
-import type { Uppdrag } from '@/lib/supabase/types'
+import type { Uppdrag, Profile } from '@/lib/supabase/types'
+
+type UppdragMedParter = Uppdrag & {
+  beställare?: Pick<Profile, 'namn' | 'betyg_sum' | 'betyg_antal' | 'betyg_positiva'>
+  utförare?: Pick<Profile, 'namn'> | null
+}
 
 export default async function UppdragDetailPage({
   params,
@@ -23,16 +28,15 @@ export default async function UppdragDetailPage({
     .eq('id', id)
     .single()
 
-  const uppdrag = uppdragRaw as (Uppdrag & { beställare?: { namn: string; betyg_sum: number; betyg_antal: number }; utförare?: { namn: string } | null }) | null
+  const uppdrag = uppdragRaw as UppdragMedParter | null
 
-  // Hämta beställarens profil separat
   if (uppdrag) {
     const { data: besProfil } = await (supabase as any)
       .from('profiles')
-      .select('namn, betyg_sum, betyg_antal')
+      .select('namn, betyg_sum, betyg_antal, betyg_positiva')
       .eq('id', uppdrag.beställare_id)
       .single()
-    uppdrag.beställare = besProfil ?? { namn: 'Okänd', betyg_sum: 0, betyg_antal: 0 }
+    uppdrag.beställare = besProfil ?? { namn: 'Okänd', betyg_sum: 0, betyg_antal: 0, betyg_positiva: 0 }
   }
 
   if (!uppdrag) notFound()
@@ -41,8 +45,9 @@ export default async function UppdragDetailPage({
   const ärBeställare = user?.id === uppdrag.beställare_id
   const ärUtförare = user?.id === uppdrag.utförare_id
   const beställare = uppdrag.beställare!
-  const betygSnitt = beställare.betyg_antal > 0
-    ? (beställare.betyg_sum / beställare.betyg_antal).toFixed(1)
+
+  const positivaAndel = beställare.betyg_antal > 0
+    ? Math.round((beställare.betyg_positiva / beställare.betyg_antal) * 100)
     : null
 
   const datumVisat = new Date(uppdrag.datum).toLocaleDateString('sv-SE', {
@@ -57,7 +62,18 @@ export default async function UppdragDetailPage({
     avbrutet: 'Avbrutet',
   }
 
-  // Hämta intresseanmälningar om användaren är beställare
+  const fastighetsTypEtikett: Record<string, string> = {
+    hus: 'Hus',
+    lägenhet: 'Lägenhet',
+    lokal: 'Lokal',
+  }
+
+  const fordonsetikett: Record<string, string> = {
+    bil: 'Personbil',
+    skåpbil: 'Skåpbil',
+    skåpbil_xl: 'Skåpbil XL',
+  }
+
   let intresserade: { utförare_id: string; utförare: { namn: string; betyg_sum: number; betyg_antal: number } | null; meddelande: string | null }[] = []
   if (ärBeställare && uppdrag.status === 'öppen') {
     const { data: anmalningar } = await (supabase as any)
@@ -74,7 +90,6 @@ export default async function UppdragDetailPage({
     }
   }
 
-  // Kolla om nuvarande användare redan anmält intresse
   let harAnmältIntresse = false
   if (user && !ärBeställare && uppdrag.status === 'öppen') {
     const { data } = await supabase
@@ -86,7 +101,6 @@ export default async function UppdragDetailPage({
     harAnmältIntresse = !!data
   }
 
-  // Kolla om parten redan lämnat betyg
   let harLämnatBetyg = false
   if (user && uppdrag.status === 'slutfört' && (ärBeställare || ärUtförare)) {
     const { data } = await (supabase as any)
@@ -98,18 +112,33 @@ export default async function UppdragDetailPage({
     harLämnatBetyg = !!data
   }
 
-  // Vem ska betygsättas av vem
   const betygMotpartId = ärBeställare ? uppdrag.utförare_id : ärUtförare ? uppdrag.beställare_id : null
+
+  const visaLogistik = Boolean(
+    uppdrag.fastighetstyp ||
+    uppdrag.placering ||
+    uppdrag.hiss ||
+    (uppdrag.vaaning && uppdrag.vaaning > 0) ||
+    uppdrag.fordonsstorlek
+  )
 
   return (
     <div className="min-h-[calc(100vh-128px)] bg-white">
       <div className="max-w-6xl mx-auto px-6 py-10">
         <Link href="/uppdrag" className="text-sm text-[#1a6b3c] hover:underline flex items-center gap-1 mb-8">
-          ← Tillbaka till uppdrag
+          Tillbaka till uppdrag
         </Link>
 
         <div className="grid md:grid-cols-3 gap-10">
           <div className="md:col-span-2">
+            {uppdrag.bild_url && (
+              <img
+                src={uppdrag.bild_url}
+                alt={uppdrag.titel}
+                className="w-full max-h-96 object-cover rounded-2xl mb-6"
+              />
+            )}
+
             <div className="flex items-center gap-3 mb-4">
               <span className="text-3xl">{kat.ikon}</span>
               <span className="text-sm font-medium bg-[#f0faf4] text-[#1a6b3c] px-3 py-1 rounded-full">{kat.etikett}</span>
@@ -139,7 +168,47 @@ export default async function UppdragDetailPage({
               </div>
             </div>
 
-            {/* Intresserade – visas bara för beställaren */}
+            {visaLogistik && (
+              <div className="mb-8">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Logistik</h2>
+                <div className="bg-[#f0faf4] rounded-2xl p-5">
+                  <table className="w-full text-sm">
+                    <tbody className="divide-y divide-[#1a6b3c]/10">
+                      {uppdrag.fastighetstyp && (
+                        <tr>
+                          <td className="py-2.5 text-gray-500 w-40">Fastighetstyp</td>
+                          <td className="py-2.5 font-medium text-gray-900">{fastighetsTypEtikett[uppdrag.fastighetstyp] ?? uppdrag.fastighetstyp}</td>
+                        </tr>
+                      )}
+                      {typeof uppdrag.vaaning === 'number' && uppdrag.vaaning > 0 && (
+                        <tr>
+                          <td className="py-2.5 text-gray-500">Våning</td>
+                          <td className="py-2.5 font-medium text-gray-900">{uppdrag.vaaning}</td>
+                        </tr>
+                      )}
+                      {typeof uppdrag.hiss === 'boolean' && (
+                        <tr>
+                          <td className="py-2.5 text-gray-500">Hiss</td>
+                          <td className="py-2.5 font-medium text-gray-900">{uppdrag.hiss ? 'Ja' : 'Nej'}</td>
+                        </tr>
+                      )}
+                      {uppdrag.placering && (
+                        <tr>
+                          <td className="py-2.5 text-gray-500">Placering</td>
+                          <td className="py-2.5 font-medium text-gray-900">{uppdrag.placering}</td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                  {uppdrag.fordonsstorlek && (
+                    <p className="mt-4 text-sm font-medium text-gray-700">
+                      Kräver: <span className="text-[#1a6b3c]">{fordonsetikett[uppdrag.fordonsstorlek] ?? uppdrag.fordonsstorlek}</span>
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+
             {ärBeställare && uppdrag.status === 'öppen' && (
               <div className="mb-8">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
@@ -160,7 +229,7 @@ export default async function UppdragDetailPage({
                           </div>
                           <div className="flex-1">
                             <p className="font-semibold text-gray-900">{a.utförare?.namn ?? 'Okänd'}</p>
-                            {snitt && <p className="text-sm text-gray-400">★ {snitt}</p>}
+                            {snitt && <p className="text-sm text-gray-400">* {snitt}</p>}
                             {a.meddelande && <p className="text-sm text-gray-600 mt-1">{a.meddelande}</p>}
                           </div>
                           <form action={async () => {
@@ -186,19 +255,17 @@ export default async function UppdragDetailPage({
               <div className="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
                 <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">Betalning</p>
                 <p className="text-4xl font-bold text-[#1a6b3c] mb-1">{uppdrag.pris} kr</p>
-                <p className="text-gray-400 text-sm mb-6">Betalas ut efter godkänt arbete</p>
+                <p className="text-gray-400 text-sm mb-1">Betalas ut efter godkänt arbete</p>
+                <p className="text-gray-400 text-xs mb-6">Du behåller ca {Math.round(uppdrag.pris * 0.85)} kr</p>
 
-                {/* Betalknapp för beställare som accepterat utförare */}
                 {ärBeställare && uppdrag.status === 'accepterad' && (
                   <BetalKnapp uppdragId={id} />
                 )}
 
-                {/* Intresseknapp för inloggad icke-beställare */}
                 {!ärBeställare && uppdrag.status === 'öppen' && user && (
-                  <IntresseKnapp uppdragId={id} harAnmält={harAnmältIntresse} />
+                  <IntresseKnapp uppdragId={id} harAnmält={harAnmältIntresse} uppdragPris={uppdrag.pris} />
                 )}
 
-                {/* Inte inloggad */}
                 {!user && uppdrag.status === 'öppen' && (
                   <>
                     <Link
@@ -217,12 +284,10 @@ export default async function UppdragDetailPage({
                   </div>
                 )}
 
-                {/* Beställaren godkänner avslutat arbete */}
                 {ärBeställare && uppdrag.status === 'pågående' && (
                   <GodkännKnapp uppdragId={id} />
                 )}
 
-                {/* Betygsformulär för båda parter efter slutfört */}
                 {uppdrag.status === 'slutfört' && (ärBeställare || ärUtförare) && betygMotpartId && !harLämnatBetyg && (
                   <BetygFormulär uppdragId={id} tillId={betygMotpartId} />
                 )}
@@ -242,12 +307,21 @@ export default async function UppdragDetailPage({
                     <p className="text-gray-400 text-sm">{uppdrag.stad}</p>
                   </div>
                 </div>
-                {betygSnitt && (
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="text-yellow-400">★</span>
-                    <span className="font-medium text-gray-900">{betygSnitt}</span>
-                    <span className="text-gray-400">({beställare.betyg_antal} uppdrag)</span>
+                {positivaAndel !== null ? (
+                  <div>
+                    <div className="flex items-center justify-between text-sm mb-1.5">
+                      <span className="text-gray-500">{beställare.betyg_antal} omdömen</span>
+                      <span className="font-semibold text-green-700">{positivaAndel}% positiva</span>
+                    </div>
+                    <div className="w-full bg-gray-100 rounded-full h-2">
+                      <div
+                        className="bg-green-500 h-2 rounded-full transition-all"
+                        style={{ width: `${positivaAndel}%` }}
+                      />
+                    </div>
                   </div>
+                ) : (
+                  <p className="text-sm text-gray-400">Inga omdömen ännu</p>
                 )}
               </div>
             </div>

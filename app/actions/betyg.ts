@@ -1,4 +1,4 @@
-'use server'
+﻿'use server'
 
 import { createClient } from '@/lib/supabase/server'
 
@@ -14,7 +14,6 @@ export async function lämnaBetyg(
   if (!user) return { error: 'Inte inloggad.' }
   if (stjärnor < 1 || stjärnor > 5) return { error: 'Ogiltigt betyg.' }
 
-  // Verifiera att uppdraget är slutfört och att tillId är rätt motpart
   const { data: uppdrag } = await (supabase as any)
     .from('uppdrag')
     .select('beställare_id, utförare_id, status')
@@ -43,6 +42,20 @@ export async function lämnaBetyg(
   if (error) {
     if (error.code === '23505') return { error: 'Du har redan lämnat betyg på detta uppdrag.' }
     return { error: error.message }
+  }
+
+  if (stjärnor >= 4) {
+    const { data: prof } = await (supabase as any)
+      .from('profiles')
+      .select('betyg_positiva')
+      .eq('id', tillId)
+      .single()
+    if (prof) {
+      await (supabase as any)
+        .from('profiles')
+        .update({ betyg_positiva: (prof.betyg_positiva ?? 0) + 1 })
+        .eq('id', tillId)
+    }
   }
 
   return { ok: true }

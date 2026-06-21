@@ -1,7 +1,7 @@
 # Frågor om DAC7-rapportering till Skatteverket
 
 **Till:** Skatteverket, funktionen för plattformsoperatörer (DAC7)
-**Från:** Dalboviken Holding AB, org.nr 559582-8152
+**Från:** Dalboviken Drift AB, org.nr 559590-6198
 **Ämne:** Frågor om rapporteringsskyldighet enligt DAC7 för plattformen Grannfix
 **Datum:** 2026-06-13
 
@@ -33,8 +33,8 @@ Tack på förhand. Vi svarar gärna på följdfrågor.
 Med vänlig hälsning
 
 [Namn och kontaktuppgifter]
-Dalboviken Holding AB
-org.nr 559582-8152
+Dalboviken Drift AB
+org.nr 559590-6198
 
 ---
 

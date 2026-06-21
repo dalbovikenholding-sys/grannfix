@@ -1,7 +1,7 @@
 # Kravspecifikation: Betallösning för Grannfix
 
 **Förfrågan om betallösning för plattformen Grannfix**
-Avsändare: Dalboviken Holding AB (org.nr 559582-8152)
+Avsändare: Dalboviken Drift AB (org.nr 559590-6198)
 Datum: 2026-06-13
 
 ---

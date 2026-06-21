@@ -1,7 +1,7 @@
 # Affärsplan Grannfix
 
 **Bolag:** Grannfix AB (under bildande)
-**Ägare:** Dalboviken Holding AB (559582-8152)
+**Ägare:** Dalboviken Drift AB (559590-6198)
 **Grundare:** Erik Hedlund, Luleå
 **Version:** 1.0, juni 2026
 **Status:** Konfidentiell. Avsedd för bank och investerare.
@@ -16,7 +16,7 @@ Plattformen tar 15 procent i serviceavgift av ordervärdet, dock lägst 25 krono
 
 Marknaden saknar idag en lokal aktör. Tiptapp är storstadsfokuserat, Blocket och Facebook Marketplace löser annonsering men inte betalning eller trygghet. Grannfix äger den norrbottniska kombinationen av lokal förankring, säker betalning och enkelhet.
 
-Prognosen är 1 100 uppdrag och 550 000 kronor i förmedlat värde år 1 i Luleå, växande till 14 000 uppdrag och 7 000 000 kronor år 3 i hela regionen. Nettointäkten växer från cirka 66 000 kronor år 1 till cirka 840 000 kronor år 3. Break-even på löpande drift bedöms realistiskt år 2. Break-even på totalinvestering, inklusive startkapitalet på 225 000 kronor, bedöms år 3 till 4. Affärsplanen innehåller ett konservativt scenario som visar att bolaget överlever och når positivt resultat även vid hälften av prognostiserad volym. Bolaget ägs av Dalboviken Holding AB, vilket möjliggör en skattefri exit via näringsbetingade andelar.
+Prognosen är 1 100 uppdrag och 550 000 kronor i förmedlat värde år 1 i Luleå, växande till 14 000 uppdrag och 7 000 000 kronor år 3 i hela regionen. Nettointäkten växer från cirka 66 000 kronor år 1 till cirka 840 000 kronor år 3. Break-even på löpande drift bedöms realistiskt år 2. Break-even på totalinvestering, inklusive startkapitalet på 225 000 kronor, bedöms år 3 till 4. Affärsplanen innehåller ett konservativt scenario som visar att bolaget överlever och når positivt resultat även vid hälften av prognostiserad volym. Bolaget ägs av Dalboviken Drift AB, vilket möjliggör en skattefri exit via näringsbetingade andelar.
 
 ---
 
@@ -181,7 +181,7 @@ Plattformen byggs mobilanpassad, tillgänglig enligt WCAG AA, med stöd för red
 
 **Grundare och VD:** Erik Hedlund, legitimerad elektriker med AL-behörighet och cirka 20 års yrkeserfarenhet. Erik driver Dalboviken-koncernen i Luleå och övergår till heltids egenföretagande under 2026. Erik bidrar med lokal förankring, affärsmässig erfarenhet och ett befintligt nätverk i Norrbotten.
 
-**Koncernkontext:** Grannfix AB ägs av Dalboviken Holding AB. Övriga bolag i koncernen är Dalboviken Drift AB (el och VVS), Dalboviken Fastigheter AB och Dalboviken Media AB. Koncernen ger Grannfix tillgång till befintlig kompetens inom drift, ekonomi, juridik och marknadsföring utan att bygga upp allt internt från start.
+**Koncernkontext:** Grannfix AB ägs av Dalboviken Drift AB. Övriga bolag i koncernen är Dalboviken Drift AB (el och VVS), Dalboviken Fastigheter AB och Dalboviken Media AB. Koncernen ger Grannfix tillgång till befintlig kompetens inom drift, ekonomi, juridik och marknadsföring utan att bygga upp allt internt från start.
 
 **Bemanning första året:** Lean. Erik som grundare och operativt ansvarig. Teknisk utveckling och löpande drift hanteras inom koncernens befintliga resurser och vid behov med extern utvecklingshjälp. Support och tvistehantering sköts manuellt i liten skala år 1 och formaliseras när volymen växer.
 
@@ -193,7 +193,7 @@ Plattformen byggs mobilanpassad, tillgänglig enligt WCAG AA, med stöd för red
 
 ### Startkapital och engångskostnader (före lansering)
 
-Startkapitalet tillförs av Dalboviken Holding AB som aktieägartillskott. Aktiekapitalet i Grannfix AB är 25 000 kronor. Utöver det behövs rörelsekapital för engångskostnader före och vid lansering.
+Startkapitalet tillförs av Dalboviken Drift AB som aktieägartillskott. Aktiekapitalet i Grannfix AB är 25 000 kronor. Utöver det behövs rörelsekapital för engångskostnader före och vid lansering.
 
 | Post | Belopp | Kommentar |
 |---|---|---|
@@ -208,7 +208,7 @@ Startkapitalet tillförs av Dalboviken Holding AB som aktieägartillskott. Aktie
 | **Likviditetsreserv** | **50 000 kr** | Rörelsekapital år 1, täcker operativ förlust och oväntade händelser |
 | **Totalt startkapitalbehov** | **225 000 kr** | |
 
-Beloppet tillförs av Dalboviken Holding AB som aktieägartillskott. Likviditetsreserven på 50 000 kronor är avsiktligt stor: den säkerställer att bolaget överlever ett scenario där Stripe Connect-onboarding drar ut på tiden, snöskottningssäsongen 2026/2027 är mild eller att volymuppbyggnaden tar ett kvartal längre än prognostiserat. Teknisk utveckling är den enskilt osäkraste posten och kan variera beroende på om arbetet sker inom koncernen eller med extern part.
+Beloppet tillförs av Dalboviken Drift AB som aktieägartillskott. Likviditetsreserven på 50 000 kronor är avsiktligt stor: den säkerställer att bolaget överlever ett scenario där Stripe Connect-onboarding drar ut på tiden, snöskottningssäsongen 2026/2027 är mild eller att volymuppbyggnaden tar ett kvartal längre än prognostiserat. Teknisk utveckling är den enskilt osäkraste posten och kan variera beroende på om arbetet sker inom koncernen eller med extern part.
 
 ---
 
@@ -293,7 +293,7 @@ Eftersom Grannfix aldrig håller kundpengar, utan dessa hålls i escrow hos PSP 
 
 ## 11. Juridik och compliance
 
-**Bolagsstruktur:** Grannfix AB bildas som ett separat aktiebolag, helägt av Dalboviken Holding AB. Strukturen isolerar Grannfix risk från övriga koncernbolag. Eftersom Holding äger andelarna utgör de näringsbetingade andelar, vilket möjliggör en framtida skattefri försäljning av Grannfix om bolaget når en exit.
+**Bolagsstruktur:** Grannfix AB bildas som ett separat aktiebolag, helägt av Dalboviken Drift AB. Strukturen isolerar Grannfix risk från övriga koncernbolag. Eftersom Holding äger andelarna utgör de näringsbetingade andelar, vilket möjliggör en framtida skattefri försäljning av Grannfix om bolaget når en exit.
 
 **Betaltjänst och PSD2:** Grannfix bedriver ingen egen betaltjänstverksamhet och behöver därför ingen egen betaltjänstlicens. All betalning, escrow och utbetalning sköts av en licensierad marketplace-PSP, Stripe Connect eller Mangopay, som är PSD2-compliant. Grannfix håller aldrig kundpengar direkt. Detta är en medveten konstruktion för att undvika tillståndskrav.
 
@@ -325,7 +325,7 @@ Eftersom Grannfix aldrig håller kundpengar, utan dessa hålls i escrow hos PSP 
 
 | Tidpunkt | Milstolpe |
 |---|---|
-| Sommar 2026 | Grannfix AB bildat under Dalboviken Holding AB. Användarvillkor och PSP-avtal på plats. |
+| Sommar 2026 | Grannfix AB bildat under Dalboviken Drift AB. Användarvillkor och PSP-avtal på plats. |
 | Höst 2026 | MVP lanseras i Luleå centrum. Säker betalning, matchning och betyg live. |
 | Höst 2026 till vinter 2027 | Första 1 100 uppdragen. Bevisa att modellen fungerar lokalt. Snöskottningssäsong som tillväxtmotor. |
 | 2027, år 2 | Utrullning till Boden, Piteå, Kalix och Älvsbyn. Trygghetsavgift och försäkring driftsatt. Mål 5 000 uppdrag. |
@@ -356,4 +356,4 @@ Slutsats: affärsmodellen bär sig även vid hälften av prognostiserad tillväx
 
 ---
 
-*Grannfix AB, under bildande. Ägs av Dalboviken Holding AB, 559582-8152. Luleå, juni 2026.*
+*Grannfix AB, under bildande. Ägs av Dalboviken Drift AB, 559590-6198. Luleå, juni 2026.*

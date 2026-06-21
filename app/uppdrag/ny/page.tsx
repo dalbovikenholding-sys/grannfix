@@ -1,9 +1,10 @@
-'use client'
+﻿'use client'
 
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { KATEGORIER, STÄDER, PRISSUGGEST } from '@/lib/konstanter'
 import { skapaUppdrag } from '@/app/actions/uppdrag'
+import BildUppladdning from '@/components/BildUppladdning'
 import type { Kategori } from '@/lib/supabase/types'
 
 const KATEGORILISTA = Object.entries(KATEGORIER) as [Kategori, { ikon: string; etikett: string }][]
@@ -18,9 +19,17 @@ export default function NyttUppdragPage() {
     stad: '',
     datum: '',
     pris: 400,
+    bild_url: '',
+    fastighetstyp: '',
+    vaaning: 0,
+    hiss: false,
+    placering: '',
+    fordonsstorlek: '',
   })
   const [error, setError] = useState('')
   const [pending, startTransition] = useTransition()
+
+  const visaLogistik = form.kategori === 'flytta' || form.kategori === 'hämta'
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -41,11 +50,11 @@ export default function NyttUppdragPage() {
           <Link href="/uppdrag" className="text-sm text-[#1a6b3c] hover:underline">← Tillbaka</Link>
           <h1 className="text-3xl font-bold text-gray-900 mt-4 mb-2">Lägg ut uppdrag</h1>
           <div className="flex gap-2 mt-6">
-            {[1, 2, 3, 4].map(n => (
+            {[1, 2, 3, 4, 5].map(n => (
               <div key={n} className={`h-1.5 flex-1 rounded-full transition-colors ${n <= steg ? 'bg-[#1a6b3c]' : 'bg-gray-200'}`} />
             ))}
           </div>
-          <p className="text-sm text-gray-400 mt-2">Steg {steg} av 4</p>
+          <p className="text-sm text-gray-400 mt-2">Steg {steg} av 5</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
@@ -132,6 +141,106 @@ export default function NyttUppdragPage() {
 
           {steg === 3 && (
             <div className="flex flex-col gap-6">
+              <h2 className="text-xl font-semibold text-gray-900">Bild och logistik</h2>
+
+              <div>
+                <p className="block text-sm font-medium text-gray-700 mb-2">Foto av uppdraget (valfritt)</p>
+                <BildUppladdning onUrl={url => setForm(f => ({ ...f, bild_url: url ?? '' }))} />
+              </div>
+
+              {visaLogistik && (
+                <>
+                  <div>
+                    <p className="block text-sm font-medium text-gray-700 mb-3">Fastighetstyp</p>
+                    <div className="flex gap-3">
+                      {(['hus', 'lägenhet', 'lokal'] as const).map(typ => (
+                        <button
+                          key={typ}
+                          type="button"
+                          onClick={() => setForm(f => ({ ...f, fastighetstyp: typ }))}
+                          className={`flex-1 py-3 rounded-xl border-2 text-sm font-medium capitalize transition-colors ${
+                            form.fastighetstyp === typ ? 'border-[#1a6b3c] bg-[#f0faf4] text-[#1a6b3c]' : 'border-gray-200 text-gray-700 hover:border-[#1a6b3c]/40'
+                          }`}
+                        >
+                          {typ.charAt(0).toUpperCase() + typ.slice(1)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="vaaning" className="block text-sm font-medium text-gray-700 mb-1.5">Våning</label>
+                      <input
+                        id="vaaning"
+                        type="number"
+                        min={0}
+                        max={20}
+                        value={form.vaaning}
+                        onChange={e => setForm(f => ({ ...f, vaaning: Number(e.target.value) }))}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-[#1a6b3c]/30 focus:border-[#1a6b3c] text-gray-900"
+                      />
+                    </div>
+                    <div className="flex items-end pb-3">
+                      <label className="flex items-center gap-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={form.hiss}
+                          onChange={e => setForm(f => ({ ...f, hiss: e.target.checked }))}
+                          className="w-5 h-5 accent-[#1a6b3c]"
+                        />
+                        <span className="text-sm font-medium text-gray-700">Det finns hiss</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="placering" className="block text-sm font-medium text-gray-700 mb-1.5">Placering</label>
+                    <input
+                      id="placering"
+                      type="text"
+                      value={form.placering}
+                      onChange={e => setForm(f => ({ ...f, placering: e.target.value }))}
+                      placeholder="T.ex. i trädgården, vid entrén"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-[#1a6b3c]/30 focus:border-[#1a6b3c] text-gray-900"
+                    />
+                  </div>
+
+                  <div>
+                    <p className="block text-sm font-medium text-gray-700 mb-3">Fordonsstorlek</p>
+                    <div className="flex gap-3">
+                      {[
+                        { värde: 'bil', etikett: 'Personbil' },
+                        { värde: 'skåpbil', etikett: 'Skåpbil' },
+                        { värde: 'skåpbil_xl', etikett: 'Skåpbil XL' },
+                      ].map(({ värde, etikett }) => (
+                        <button
+                          key={värde}
+                          type="button"
+                          onClick={() => setForm(f => ({ ...f, fordonsstorlek: värde }))}
+                          className={`flex-1 py-3 rounded-xl border-2 text-sm font-medium transition-colors ${
+                            form.fordonsstorlek === värde ? 'border-[#1a6b3c] bg-[#f0faf4] text-[#1a6b3c]' : 'border-gray-200 text-gray-700 hover:border-[#1a6b3c]/40'
+                          }`}
+                        >
+                          {etikett}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
+
+              <div className="flex gap-3 mt-2">
+                <button type="button" onClick={() => setSteg(2)} className="flex-1 border-2 border-gray-200 text-gray-700 py-3.5 rounded-full font-semibold">Tillbaka</button>
+                <button type="button" onClick={() => setSteg(4)} className="btn-primary flex-1 bg-[#1a6b3c] text-white py-3.5 rounded-full font-semibold">
+                  Fortsätt
+                </button>
+              </div>
+            </div>
+          )}
+
+          {steg === 4 && (
+            <div className="flex flex-col gap-6">
               <h2 className="text-xl font-semibold text-gray-900">Sätt ditt pris</h2>
               {form.kategori && (
                 <div className="bg-[#f0faf4] rounded-xl p-4 text-sm text-[#1a6b3c]">
@@ -165,16 +274,23 @@ export default function NyttUppdragPage() {
                 </div>
               </div>
               <div className="flex gap-3 mt-2">
-                <button type="button" onClick={() => setSteg(2)} className="flex-1 border-2 border-gray-200 text-gray-700 py-3.5 rounded-full font-semibold">Tillbaka</button>
-                <button type="button" onClick={() => setSteg(4)} className="btn-primary flex-1 bg-[#1a6b3c] text-white py-3.5 rounded-full font-semibold">Granska</button>
+                <button type="button" onClick={() => setSteg(3)} className="flex-1 border-2 border-gray-200 text-gray-700 py-3.5 rounded-full font-semibold">Tillbaka</button>
+                <button type="button" onClick={() => setSteg(5)} className="btn-primary flex-1 bg-[#1a6b3c] text-white py-3.5 rounded-full font-semibold">Granska</button>
               </div>
             </div>
           )}
 
-          {steg === 4 && (
+          {steg === 5 && (
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               <h2 className="text-xl font-semibold text-gray-900">Granska och publicera</h2>
               <div className="bg-[#f0faf4] rounded-2xl p-6 flex flex-col gap-4">
+                {form.bild_url && (
+                  <img
+                    src={form.bild_url}
+                    alt="Bild för uppdraget"
+                    className="w-full aspect-video object-cover rounded-xl"
+                  />
+                )}
                 <div className="flex items-center gap-3">
                   <span className="text-3xl">{form.kategori ? KATEGORIER[form.kategori].ikon : ''}</span>
                   <div>
@@ -195,7 +311,7 @@ export default function NyttUppdragPage() {
               </p>
               {error && <p className="text-red-600 text-sm bg-red-50 border border-red-100 rounded-xl px-4 py-3">{error}</p>}
               <div className="flex gap-3">
-                <button type="button" onClick={() => setSteg(3)} className="flex-1 border-2 border-gray-200 text-gray-700 py-3.5 rounded-full font-semibold">Tillbaka</button>
+                <button type="button" onClick={() => setSteg(4)} className="flex-1 border-2 border-gray-200 text-gray-700 py-3.5 rounded-full font-semibold">Tillbaka</button>
                 <button type="submit" disabled={pending} className="btn-primary flex-1 bg-[#1a6b3c] text-white py-3.5 rounded-full font-semibold disabled:opacity-60">
                   {pending ? 'Publicerar...' : 'Publicera uppdrag'}
                 </button>

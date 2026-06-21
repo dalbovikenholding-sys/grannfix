@@ -1,4 +1,4 @@
-'use server'
+﻿'use server'
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
@@ -22,6 +22,12 @@ export async function skapaUppdrag(formData: FormData) {
       pris: Number(formData.get('pris')),
       datum: formData.get('datum') as string,
       status: 'öppen',
+      bild_url: (formData.get('bild_url') as string) || null,
+      fastighetstyp: (formData.get('fastighetstyp') as string) || null,
+      vaaning: Number(formData.get('vaaning')) || 0,
+      hiss: formData.get('hiss') === 'true',
+      placering: (formData.get('placering') as string) || null,
+      fordonsstorlek: (formData.get('fordonsstorlek') as string) || null,
     })
     .select('id')
     .single()
@@ -31,7 +37,7 @@ export async function skapaUppdrag(formData: FormData) {
   redirect(`/uppdrag/${data.id}?skapad=1`)
 }
 
-export async function anmälIntresse(uppdragId: string, meddelande?: string) {
+export async function anmälIntresse(uppdragId: string, meddelande?: string, forelagnatPris?: number) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -43,6 +49,7 @@ export async function anmälIntresse(uppdragId: string, meddelande?: string) {
       uppdrag_id: uppdragId,
       utförare_id: user.id,
       meddelande: meddelande || null,
+      foreslagen_pris: forelagnatPris || null,
     })
 
   if (error) {
@@ -76,7 +83,6 @@ export async function markeraSlutfört(uppdragId: string) {
 
   if (!user) return { error: 'Inte inloggad.' }
 
-  // Kräver pågående status och att betalning bekräftats (payment intent satt av webhook)
   const { data: uppdrag } = await (supabase as any)
     .from('uppdrag')
     .select('status, beställare_id, stripe_payment_intent_id')

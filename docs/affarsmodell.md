@@ -54,7 +54,7 @@ Ingen skattefri gräns för tjänsteinkomster. DAC7 gör att Skatteverket ser al
 
 ## Juridisk struktur
 
-**Bilda Grannfix AB, ägt av Dalboviken Holding AB.**
+**Bilda Grannfix AB, ägt av Dalboviken Drift AB.**
 
 Näringsbetingade andelar: framtida försäljning av Grannfix AB blir skattefri på bolagsnivå om Holding äger onoterade andelar. Riskisolering: plattformens konsumentrisk och betalningsrisk separeras från Drift AB och Fastigheter AB.
 
@@ -67,5 +67,5 @@ Varumärket Grannfix hålls fristående från Dalboviken-varumärket.
 1. Skicka `fragelista-skatteverket-dac7.md` till Skatteverket. Bekräfta rapporteringsskyldighet och format.
 2. Skicka `kravspec-betalleverantor.md` till Stripe Connect och Mangopay/Lemonway. Begär offert.
 3. Anlita advokat med PSD2-kompetens. Granska slutgiltigt betalflöde med vald PSP.
-4. Bilda Grannfix AB under Dalboviken Holding AB.
+4. Bilda Grannfix AB under Dalboviken Drift AB.
 5. Lägg personnummer-insamling och kvartalsaggregering som hårda krav i teknisk kravspec innan backend-utveckling startar.
